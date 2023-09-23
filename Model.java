@@ -12,6 +12,8 @@ public class Model{
         D
     }
 
+    String[] _suits = new String[]{"H", "S", "C", "D"}; 
+
     /*
      * Colors for each suits
      */
@@ -19,6 +21,7 @@ public class Model{
     String RED = "\u001B[31m";      /* Used for Heart and Diamonds */
     String GREEN = "\u001B[32m";    /* Not Used */
     String YELLOW = "\u001B[33m";   /* Used for Spades and Clubs */
+    String[] colors = new String[]{RED, YELLOW};
 
     /*
      * List for the cards
@@ -27,6 +30,8 @@ public class Model{
     private ArrayList<String> Suit_dimond = new ArrayList<>();
     private ArrayList<String> Suit_spades = new ArrayList<>();
     private ArrayList<String> Suit_clubs = new ArrayList<>();
+
+    public ArrayList<ArrayList<String>> init_deck = new ArrayList<ArrayList<String>>();
     
     /*
      * List for shuffing all the cards
@@ -52,121 +57,54 @@ public class Model{
 
     public void fill_suits()
     {
-        /*
-         * Fill Hearts
-         */
-        for(int i = 1; i <= 13; i++)
+        String current_color = "";
+
+        init_deck.add(Suit_dimond);
+        init_deck.add(Suit_heart);
+        init_deck.add(Suit_spades);
+        init_deck.add(Suit_clubs);
+
+        for(int j = 0; j < 4; j++)
         {
-            switch(i)
+            if(j < 3)
             {
-                case 1:
-                    Suit_heart.add(this.RED + Suits.H + "A");
-                break;
+                current_color = colors[0];
+            }else{
+                current_color = colors[1];
+            }
 
-                case 11:
-                    Suit_heart.add(this.RED + Suits.H + "J");
-                break;
+            for(int i = 1; i <= 13; i++)
+            {
+                switch(i)
+                {
+                    case 1:
+                        init_deck.get(j).add(current_color + _suits[j] + "A");
+                    break;
 
-                case 12:
-                    Suit_heart.add(this.RED + Suits.H + "Q");
-                break;
-                case 13:
-                    Suit_heart.add(this.RED + Suits.H + "K");
-                break;
+                    case 11:
+                        init_deck.get(j).add(current_color + _suits[j] + "J");
+                    break;
 
-                default:
-                    Suit_heart.add(this.RED + Suits.H + Integer.toString(i));
-                break;
+                    case 12:
+                        init_deck.get(j).add(current_color + _suits[j] + "Q");
+                    break;
+                    
+                    case 13:
+                        init_deck.get(j).add(current_color + _suits[j] + "K");
+                    break;
+
+                    default:
+                        init_deck.get(j).add(current_color + _suits[j] + Integer.toString(i));
+                    break;
+                }
             }
             
-        }
-
-        /*
-         * Fill Diamond
-         */
-        for(int i = 1; i <= 13; i++)
-        {
-            switch(i)
-            {
-                case 1:
-                    Suit_dimond.add(this.RED + Suits.D + "A");
-                break;
-
-                case 11:
-                    Suit_dimond.add(this.RED + Suits.D + "J");
-                break;
-
-                case 12:
-                    Suit_dimond.add(this.RED + Suits.D + "Q");
-                break;
-                case 13:
-                    Suit_dimond.add(this.RED + Suits.D + "K");
-                break;
-
-                default:
-                    Suit_dimond.add(this.RED + Suits.D + Integer.toString(i));
-                break;
-            }
-            
-        }
-
-        /*
-         * Fill Spades
-         */
-        for(int i = 1; i <= 13; i++)
-        {
-            switch(i)
-            {
-                case 1:
-                    Suit_spades.add(this.YELLOW + Suits.S + "A");
-                break;
-
-                case 11:
-                    Suit_spades.add(this.YELLOW + Suits.S + "J");
-                break;
-
-                case 12:
-                    Suit_spades.add(this.YELLOW + Suits.S + "Q");
-                break;
-                case 13:
-                    Suit_spades.add(this.YELLOW + Suits.S + "K");
-                break;
-
-                default:
-                    Suit_spades.add(this.YELLOW + Suits.S + Integer.toString(i));
-                break;
-            }
-        }
-
-        /*
-         * Fill Clubs
-         */
-        for(int i = 1; i <= 13; i++)
-        {
-            switch(i)
-            {
-                case 1:
-                    Suit_clubs.add(this.YELLOW + Suits.C + "A");
-                break;
-
-                case 11:
-                    Suit_clubs.add(this.YELLOW + Suits.C + "J");
-                break;
-
-                case 12:
-                    Suit_clubs.add(this.YELLOW + Suits.C + "Q");
-                break;
-                case 13:
-                    Suit_clubs.add(this.YELLOW + Suits.C + "K");
-                break;
-
-                default:
-                    Suit_clubs.add(this.YELLOW + Suits.C + Integer.toString(i));
-                break;
-            }
         }
     }
 
+    /*
+     * Only for testing
+     */
     public String getCards(int index, String suit)
     {
         String temp = "";
@@ -197,10 +135,10 @@ public class Model{
         /*
          * Combined all the decks in to a single common deck
          */
-        common_deck.addAll(0, Suit_clubs);
-        common_deck.addAll(0, Suit_spades);
-        common_deck.addAll(0, Suit_heart);
-        common_deck.addAll(0, Suit_dimond);
+        common_deck.addAll(0, init_deck.get(0));
+        common_deck.addAll(0, init_deck.get(1));
+        common_deck.addAll(0, init_deck.get(2));
+        common_deck.addAll(0, init_deck.get(3));
 
         /*
          * Shufffle the deck
