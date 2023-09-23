@@ -31,18 +31,12 @@ public class Presenter {
 
         for(String i : suit.common_deck)
         {
-        System.out.print(i + " ");
+            System.out.print(i + " ");
         }
 
-        System.out.println("\nStack 1");
-        System.out.println(suit.list.get(0).pop());
-        System.out.println(suit.list.get(0).pop());
-        System.out.println(suit.list.get(0).pop());
 
-        System.out.println("Stack 2");
-        System.out.println(suit.list.get(1).pop());
-        System.out.println(suit.list.get(1).pop());
-        System.out.println(suit.list.get(1).pop());
+        for(int i = 0; i < 8; i++)
+            System.out.println(suit.list.get(i));
     }
     
 }

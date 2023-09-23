@@ -33,10 +33,17 @@ public class Model{
      */
     public ArrayList<String> common_deck = new ArrayList<>();
 
-    public Stack<String> stack = new Stack<String>();
-    public Stack<String> stack_1 = new Stack<String>();
+    public Stack<String> stack_draw = new Stack<String>();
+    public Stack<String> stack_play_1 = new Stack<String>();
+    public Stack<String> stack_play_2 = new Stack<String>();
+    public Stack<String> stack_play_3 = new Stack<String>();
+    public Stack<String> stack_play_4 = new Stack<String>();
+    public Stack<String> stack_play_5 = new Stack<String>();
+    public Stack<String> stack_play_6 = new Stack<String>();
+    public Stack<String> stack_play_7 = new Stack<String>();
+    
 
-    public ArrayList<Stack<String>> list = new ArrayList<>();
+    public ArrayList<Stack<String>> list = new ArrayList<Stack<String>>();
 
     
 
@@ -45,22 +52,22 @@ public class Model{
         /*
          * Fill Hearts
          */
-        for(int i = 0; i < 13; i++)
+        for(int i = 1; i <= 13; i++)
         {
             switch(i)
             {
-                case 0:
+                case 1:
                     Suit_heart.add(this.RED + Suits.H + "A");
                 break;
 
-                case 10:
+                case 11:
                     Suit_heart.add(this.RED + Suits.H + "J");
                 break;
 
-                case 11:
+                case 12:
                     Suit_heart.add(this.RED + Suits.H + "Q");
                 break;
-                case 12:
+                case 13:
                     Suit_heart.add(this.RED + Suits.H + "K");
                 break;
 
@@ -74,22 +81,22 @@ public class Model{
         /*
          * Fill Diamond
          */
-        for(int i = 0; i < 13; i++)
+        for(int i = 1; i <= 13; i++)
         {
             switch(i)
             {
-                case 0:
+                case 1:
                     Suit_dimond.add(this.RED + Suits.D + "A");
                 break;
 
-                case 10:
+                case 11:
                     Suit_dimond.add(this.RED + Suits.D + "J");
                 break;
 
-                case 11:
+                case 12:
                     Suit_dimond.add(this.RED + Suits.D + "Q");
                 break;
-                case 12:
+                case 13:
                     Suit_dimond.add(this.RED + Suits.D + "K");
                 break;
 
@@ -103,22 +110,22 @@ public class Model{
         /*
          * Fill Spades
          */
-        for(int i = 0; i < 13; i++)
+        for(int i = 1; i <= 13; i++)
         {
             switch(i)
             {
-                case 0:
+                case 1:
                     Suit_spades.add(this.YELLOW + Suits.S + "A");
                 break;
 
-                case 10:
+                case 11:
                     Suit_spades.add(this.YELLOW + Suits.S + "J");
                 break;
 
-                case 11:
+                case 12:
                     Suit_spades.add(this.YELLOW + Suits.S + "Q");
                 break;
-                case 12:
+                case 13:
                     Suit_spades.add(this.YELLOW + Suits.S + "K");
                 break;
 
@@ -131,22 +138,22 @@ public class Model{
         /*
          * Fill Clubs
          */
-        for(int i = 0; i < 13; i++)
+        for(int i = 1; i <= 13; i++)
         {
             switch(i)
             {
-                case 0:
+                case 1:
                     Suit_clubs.add(this.YELLOW + Suits.C + "A");
                 break;
 
-                case 10:
+                case 11:
                     Suit_clubs.add(this.YELLOW + Suits.C + "J");
                 break;
 
-                case 11:
+                case 12:
                     Suit_clubs.add(this.YELLOW + Suits.C + "Q");
                 break;
-                case 12:
+                case 13:
                     Suit_clubs.add(this.YELLOW + Suits.C + "K");
                 break;
 
@@ -197,18 +204,46 @@ public class Model{
          */
         Collections.shuffle(common_deck);
 
-        #if 0
-        stack.push(common_deck.get(0));
-        stack.push(common_deck.get(1));
-        stack.push(common_deck.get(2));
+        /*
+         * Added cards to each individual stack
+         */
+        String temp = "";
+        System.out.println("Size of common deck = " + common_deck.size());
+        for(int i = 0; i < common_deck.size(); i++)
+        {
+            temp = common_deck.get(i);
 
+            if(i == 0)
+                stack_play_1.push(temp);
+            else if(i < 3)
+                stack_play_2.push(temp);
+            else if(i < 6)
+                stack_play_3.push(temp);
+            else if(i < 10)
+                stack_play_4.push(temp);
+            else if(i < 15)
+                stack_play_5.push(temp);
+            else if(i < 21)
+                stack_play_6.push(temp);
+            else if(i < 28)
+                stack_play_7.push(temp);
+            else if(i < 52)
+                stack_draw.push(temp);
+        }
 
-        stack_1.push(common_deck.get(3));
-        stack_1.push(common_deck.get(4));
-        stack_1.push(common_deck.get(5));
-        list.add(0, stack);
-        list.add(1,stack_1);
-        #endif
+        /*
+         * Add the stack to the list
+         */
+        list.add(0, stack_play_1);
+        list.add(1, stack_play_2);
+        list.add(2, stack_play_3);
+        list.add(3, stack_play_4);
+        list.add(4, stack_play_5);
+        list.add(5, stack_play_6);
+        list.add(6, stack_play_7);
+        list.add(7, stack_draw);
     }
+
+
 
 }
