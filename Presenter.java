@@ -37,6 +37,14 @@ public class Presenter {
 
         for(int i = 0; i < 8; i++)
             System.out.println(suit.list.get(i));
+
+
+    
+        String card = suit.list.get(0).pop();
+        System.out.println("Peek : " + card);
+        char color = suit.check_card_color(card);
+        
+        System.out.println(card + " color is: " + color);
     }
     
 }

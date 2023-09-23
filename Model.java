@@ -43,6 +43,9 @@ public class Model{
     public Stack<String> stack_play_7 = new Stack<String>();
     
 
+    /*
+     * Contains all the stacks
+     */
     public ArrayList<Stack<String>> list = new ArrayList<Stack<String>>();
 
     
@@ -244,6 +247,23 @@ public class Model{
         list.add(7, stack_draw);
     }
 
+    public char check_card_color(String card)
+    {
+        char color = 'Z';
+        switch(card.charAt(5))  //The index is 5 because the string also contains colors, so we need to by pass the color and get the actual string
+        {
+            case 'D':
+            case 'H':
+                color = 'R';
+            break;
+
+            case 'S':
+            case 'C':
+                color = 'Y';
+            break;
+        }
+        return color;
+    }
 
 
 }
