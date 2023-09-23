@@ -40,7 +40,7 @@ public class Presenter {
             System.out.println(suit.list.get(i));
 
 
-    
+    /* 
         String card = suit.list.get(0).peek();
         char color = suit.getCardColor(card);
         
@@ -49,6 +49,14 @@ public class Presenter {
         //To check the logic of the card hierarchy.
         System.out.println("Status is : " + suit.checkCardHierarchy("02", "01"));
         System.out.println("Status is : " + suit.checkCardHierarchy("02","03"));
-    }
+        System.out.println("Status is : " + suit.checkCardHierarchy("Q","K"));
+        System.out.println("Status is : " + suit.checkCardHierarchy("J","K"));
+    */
+    boolean card_switch = false;
+    System.out.println("Picked card: " + suit.list.get(0).peek());
+    System.out.println("Resting card : " + suit.list.get(1).peek());
+    card_switch = suit.checkSwitch(suit.list.get(0).peek(), suit.list.get(1).peek());
+    System.out.println("Card swicth status : " + card_switch);
     
+    }
 }

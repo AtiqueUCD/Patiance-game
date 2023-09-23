@@ -78,23 +78,27 @@ public class Model{
                 switch(i)
                 {
                     case 1:
-                        init_deck.get(j).add(current_color + _suits[j] + "A");
+                        init_deck.get(j).add(current_color + _suits[j] + "0A");
                     break;
 
                     case 11:
-                        init_deck.get(j).add(current_color + _suits[j] + "J");
+                        init_deck.get(j).add(current_color + _suits[j] + "0J");
                     break;
 
                     case 12:
-                        init_deck.get(j).add(current_color + _suits[j] + "Q");
+                        init_deck.get(j).add(current_color + _suits[j] + "0Q");
                     break;
                     
                     case 13:
-                        init_deck.get(j).add(current_color + _suits[j] + "K");
+                        init_deck.get(j).add(current_color + _suits[j] + "0K");
+                    break;
+
+                    case 10:
+                    init_deck.get(j).add(current_color + _suits[j] + "10");
                     break;
 
                     default:
-                        init_deck.get(j).add(current_color + _suits[j] + Integer.toString(i));
+                        init_deck.get(j).add(current_color + _suits[j] + "0" + Integer.toString(i));
                     break;
                 }
             }
@@ -188,7 +192,7 @@ public class Model{
     /*
      * Note : to check the color of any card.
      */
-    public char getCardColor(String card)
+    public static char getCardColor(String card)
     {
         char color = 'Z';//Initialize to a random color.
         switch(card.charAt(5))  //The index is 5 because the string also contains colors, so we need to by pass the color and get the actual string
@@ -218,20 +222,77 @@ public class Model{
      *        place card > pick-up card = true else false.
      * 
      */
-    public boolean checkCardHierarchy(String Pickup, String Place)
+    public static boolean checkCardHierarchy(String Pickup, String Place)
     {
         boolean status = false;
         
-        int pick_up = Integer.parseInt(Pickup);
-        int place = Integer.parseInt(Place);
+        switch(Pickup)
+        {
+            case "0K":
+                Pickup = "13";
+            break;
 
-        
-        if((place - pick_up) == 1)//Will only work for nos.
+            case "0Q":
+                Pickup = "12";
+            break;
+
+            case "0J":
+                Pickup = "11";
+            break;
+        }
+
+
+        switch(Place)
+        {
+            case "0K":
+                Place = "13";
+            break;
+
+            case "0Q":
+                Place = "12";
+            break;
+
+            case "0J":
+                Place = "11";
+            break;
+        }
+
+        int _Pickup = Integer.parseInt(Pickup);
+        int _Place = Integer.parseInt(Place);
+
+        if(_Place - _Pickup == 1)
         {
             status = true;
         }
-
         return status;
+    }
+
+    public boolean checkSwitch(String pick_up_card, String place_card)
+    {
+        boolean color_status = false, hirarchy_status = false;
+        char pick_up_color = 'Z';
+        char place_color = 'Z';
+        
+        String _act_pick_up_card = pick_up_card.substring(6,8);
+        String _act_place_card = place_card.substring(6,8);
+        
+        System.out.println("Picked card: " + _act_pick_up_card);
+        System.out.println("Placed card: " + _act_place_card);
+        
+        //If the colors are complimentry
+        pick_up_color = getCardColor(pick_up_card);
+        place_color = getCardColor(place_card);
+
+        if(pick_up_color != place_color)
+        {
+            color_status = true;
+            //then check for the hirarchy
+            hirarchy_status = Model.checkCardHierarchy(_act_pick_up_card, _act_place_card);
+        }
+            //else throw error
+
+
+        return (color_status & hirarchy_status);
     }
 
 }
