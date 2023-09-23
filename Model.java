@@ -306,22 +306,23 @@ public class Model{
 
     public void processCommand(int command)
     {
-        int comamnd_H =  (command / 10);
-        int comamnd_L = (command % 10);
+        int pick =  (command / 10);
+        int place = (command % 10);
+        int no_of_picks = (command / 100);
 
         String pick_up_card = "";
         String place_card = "";
 
         //Check if the respective stacks are empty
-        if(!list.get(comamnd_H).empty() && !list.get(comamnd_L).empty())
+        if(!list.get(pick).empty() && !list.get(place).empty())
         {
             //Will only peek over here as if the command is inavlid then the stack should remain untouched.
-            pick_up_card = list.get(comamnd_H).peek();
-            place_card = list.get(comamnd_L).peek();
+            pick_up_card = list.get(pick).peek();
+            place_card = list.get(place).peek();
 
             if(checkSwitch(pick_up_card, place_card))
             {
-                list.get(comamnd_L).push(list.get(comamnd_H).pop());
+                list.get(place).push(list.get(pick).pop());
             }else{
                 System.out.println("Play invalid!!!");
             }
