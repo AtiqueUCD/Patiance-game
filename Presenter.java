@@ -34,17 +34,21 @@ public class Presenter {
             System.out.print(i + " ");
         }
 
+        System.out.println("");
 
         for(int i = 0; i < 8; i++)
             System.out.println(suit.list.get(i));
 
 
     
-        String card = suit.list.get(0).pop();
-        System.out.println("Peek : " + card);
-        char color = suit.check_card_color(card);
+        String card = suit.list.get(0).peek();
+        char color = suit.getCardColor(card);
         
         System.out.println(card + " color is: " + color);
+
+        //To check the logic of the card hierarchy.
+        System.out.println("Status is : " + suit.checkCardHierarchy("02", "01"));
+        System.out.println("Status is : " + suit.checkCardHierarchy("02","03"));
     }
     
 }

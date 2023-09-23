@@ -247,23 +247,53 @@ public class Model{
         list.add(7, stack_draw);
     }
 
-    public char check_card_color(String card)
+    /*
+     * Note : to check the color of any card.
+     */
+    public char getCardColor(String card)
     {
-        char color = 'Z';
+        char color = 'Z';//Initialize to a random color.
         switch(card.charAt(5))  //The index is 5 because the string also contains colors, so we need to by pass the color and get the actual string
         {
+            /*
+             * For Diamond and Heart the color will be RED
+             */
             case 'D':
             case 'H':
                 color = 'R';
             break;
 
+            /*
+             * For Spades and Clubs the color will be yellow.
+             */
             case 'S':
             case 'C':
                 color = 'Y';
             break;
         }
+
         return color;
     }
 
+    /*
+     * Note : pair = pick-up card + place card.
+     *        place card > pick-up card = true else false.
+     * 
+     */
+    public boolean checkCardHierarchy(String Pickup, String Place)
+    {
+        boolean status = false;
+        
+        int pick_up = Integer.parseInt(Pickup);
+        int place = Integer.parseInt(Place);
+
+        
+        if((place - pick_up) == 1)//Will only work for nos.
+        {
+            status = true;
+        }
+
+        return status;
+    }
 
 }
