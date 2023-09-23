@@ -180,10 +180,18 @@ public class Model{
 
     public void fill_and_shuffle_deck()
     {
+        /*
+         * Combined all the decks in to a single common deck
+         */
         common_deck.addAll(0, Suit_clubs);
         common_deck.addAll(0, Suit_spades);
         common_deck.addAll(0, Suit_heart);
         common_deck.addAll(0, Suit_dimond);
+
+        /*
+         * Shufffle the deck
+         */
+        Collections.shuffle(common_deck);
     }
 
 }
