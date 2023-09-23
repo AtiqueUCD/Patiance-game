@@ -288,9 +288,6 @@ public class Model{
         String _act_pick_up_card = pick_up_card.substring(6,8);
         String _act_place_card = place_card.substring(6,8);
         
-        System.out.println("Picked card: " + _act_pick_up_card);
-        System.out.println("Placed card: " + _act_place_card);
-        
         //If the colors are complimentry
         pick_up_color = getCardColor(pick_up_card);
         place_color = getCardColor(place_card);
@@ -311,9 +308,6 @@ public class Model{
     {
         int comamnd_H =  (command / 10);
         int comamnd_L = (command % 10);
-
-        System.out.println("Command_H : " + comamnd_H);
-        System.out.println("Command_L : " + comamnd_L);
 
         String pick_up_card = "";
         String place_card = "";
