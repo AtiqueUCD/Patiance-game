@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.*;
 
 public class Model{
@@ -35,6 +33,12 @@ public class Model{
      */
     public ArrayList<String> common_deck = new ArrayList<>();
 
+    public Stack<String> stack = new Stack<String>();
+    public Stack<String> stack_1 = new Stack<String>();
+
+    public ArrayList<Stack<String>> list = new ArrayList<>();
+
+    
 
     public void fill_suits()
     {
@@ -192,6 +196,19 @@ public class Model{
          * Shufffle the deck
          */
         Collections.shuffle(common_deck);
+
+        #if 0
+        stack.push(common_deck.get(0));
+        stack.push(common_deck.get(1));
+        stack.push(common_deck.get(2));
+
+
+        stack_1.push(common_deck.get(3));
+        stack_1.push(common_deck.get(4));
+        stack_1.push(common_deck.get(5));
+        list.add(0, stack);
+        list.add(1,stack_1);
+        #endif
     }
 
 }
