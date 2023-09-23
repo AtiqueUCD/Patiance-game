@@ -267,6 +267,18 @@ public class Model{
         return status;
     }
 
+    /*
+     * Function name    :- checkSwitch
+     * Type             :- public
+     * Return type      :- boolean
+     * Parameters       :- pick_up_card (String), place_card (String)
+     * Description      :-
+     *                      This fucntion checks whether the card placement is possible or not.
+     *                      It checks for the following:-   
+     *                          1. If the colors are cimplimentry.   
+     *                          2. And the cards are follwing correct hierarchy.
+     *                      If these consitions are ture then it return true (That the card switch is possible).
+     */
     public boolean checkSwitch(String pick_up_card, String place_card)
     {
         boolean color_status = false, hirarchy_status = false;
@@ -293,6 +305,34 @@ public class Model{
 
 
         return (color_status & hirarchy_status);
+    }
+
+    public void processCommand(int command)
+    {
+        int comamnd_H =  (command / 10);
+        int comamnd_L = (command % 10);
+
+        System.out.println("Command_H : " + comamnd_H);
+        System.out.println("Command_L : " + comamnd_L);
+
+        String pick_up_card = "";
+        String place_card = "";
+
+        //Check if the respective stacks are empty
+        if(!list.get(comamnd_H).empty() && !list.get(comamnd_L).empty())
+        {
+            //Will only peek over here as if the command is inavlid then the stack should remain untouched.
+            pick_up_card = list.get(comamnd_H).peek();
+            place_card = list.get(comamnd_L).peek();
+
+            if(checkSwitch(pick_up_card, place_card))
+            {
+                list.get(comamnd_L).push(list.get(comamnd_H).pop());
+            }else{
+                System.out.println("Play invalid!!!");
+            }
+        }
+
     }
 
 }

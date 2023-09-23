@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Presenter {
 
     /*
@@ -51,12 +53,43 @@ public class Presenter {
         System.out.println("Status is : " + suit.checkCardHierarchy("02","03"));
         System.out.println("Status is : " + suit.checkCardHierarchy("Q","K"));
         System.out.println("Status is : " + suit.checkCardHierarchy("J","K"));
-    */
-    boolean card_switch = false;
-    System.out.println("Picked card: " + suit.list.get(0).peek());
-    System.out.println("Resting card : " + suit.list.get(1).peek());
-    card_switch = suit.checkSwitch(suit.list.get(0).peek(), suit.list.get(1).peek());
-    System.out.println("Card swicth status : " + card_switch);
-    
+    */ 
+
+    /*
+            Presenter.clearScreen();
+            boolean card_switch = false;
+            System.out.println("Picked card: " + suit.list.get(0).peek());
+            System.out.println("Resting card : " + suit.list.get(1).peek());
+            card_switch = suit.checkSwitch(suit.list.get(0).peek(), suit.list.get(1).peek());
+            System.out.println("Card swicth status : " + card_switch);
+            */
+            int command = 0;
+            clearScreen();
+            displayPlayGround(suit);
+            Scanner in = new Scanner(System.in);
+            while(command != 99)
+            {
+                System.out.print("Your command: ");
+                command = in.nextInt();
+                if(command == 99)
+                    break;
+                suit.processCommand(command);
+                System.out.println("");
+                displayPlayGround(suit);
+            }
+                
+        
+    }
+
+    public static void clearScreen()
+    {
+        System.out.print("\033[H\033[2J");  
+        System.out.flush(); 
+    }
+
+    public static void displayPlayGround(Model suit)
+    {
+        for(int i = 0; i < 7; i++)
+            System.out.println(Integer.toString(i) + "->" + suit.list.get(i));
     }
 }
