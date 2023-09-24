@@ -2,16 +2,6 @@ import java.util.*;
 
 public class Model{
     
-    /*
-     * Helper Enum for building the Suits; Only for initialization
-     */
-    enum Suits{
-        H,
-        S,
-        C,
-        D
-    }
-
     String[] _suits = new String[]{"H", "D", "C", "S"}; 
 
     /*
@@ -53,7 +43,11 @@ public class Model{
      */
     public ArrayList<Stack<String>> list = new ArrayList<Stack<String>>();
 
-    
+    /*
+     * This array is for the transportantion of multiple cards from source arraystack to destination stack
+     */
+    private String[] transport_array = new String[100];
+    private int transport_counter = 0;
 
     public void fill_suits()
     {
@@ -239,6 +233,10 @@ public class Model{
             case "0J":
                 Pickup = "11";
             break;
+
+            case "0A":
+                Pickup = "1";
+            break;
         }
 
 
@@ -254,6 +252,10 @@ public class Model{
 
             case "0J":
                 Place = "11";
+            break;
+
+            case "0A":
+                Place = "1";
             break;
         }
 
@@ -304,30 +306,112 @@ public class Model{
         return (color_status & hirarchy_status);
     }
 
-    public void processCommand(int command)
+    public boolean processCommand(String command)
     {
-        int pick =  (command / 10);
-        int place = (command % 10);
-        int no_of_picks = (command / 100);
+        int pick = 0, place = 0, no_of_picks = 0;
+        int temp_cnt = 0;
+        String c1 = "", c2 = "";
+
+        int intCommand = Integer.parseInt(command);
+        if(command.length() > 2)
+        {
+            pick =  (intCommand / 100);
+            place = ((intCommand % 100) / 10);
+            no_of_picks = (intCommand % 10);
+        }
+        else{
+            pick =  (intCommand / 10);
+            place = (intCommand % 10);
+        }
+
+        //Init the transport counter to zero for the new transaction
+        transport_counter = 0;
 
         String pick_up_card = "";
         String place_card = "";
 
         //Check if the respective stacks are empty
-        if(!list.get(pick).empty() && !list.get(place).empty())
+        if(no_of_picks > 1)
         {
-            //Will only peek over here as if the command is inavlid then the stack should remain untouched.
-            pick_up_card = list.get(pick).peek();
+            //Get the cards in the transport array
+            while(no_of_picks > 0)
+            {
+                transport_array[transport_counter++] = list.get(pick).pop();
+                no_of_picks--;
+            }
+
+            temp_cnt = 0;//transport_counter;
+
+            pick_up_card = transport_array[transport_counter - 1];
             place_card = list.get(place).peek();
 
+            /*
+             * perform check
+             */
+            while(transport_counter != (temp_cnt + 1))
+            {
+                if(temp_cnt == 0)
+                {
+                    c1 = transport_array[temp_cnt];
+                    c2 = transport_array[++temp_cnt];
+                }else{
+                    c1 = transport_array[temp_cnt];
+                    c2 = transport_array[++temp_cnt];
+                }
+                if(!checkSwitch(c1, c2))
+                {
+                    /*Abort transport */
+                    System.out.println("Abort transport!!");
+                    /*Put the picked data back to the source stack */
+                    while(transport_counter > 0)
+                    {
+                        list.get(pick).push(transport_array[--transport_counter]);
+                    }
+                    return false;
+                }
+
+            }
+            
             if(checkSwitch(pick_up_card, place_card))
             {
-                list.get(place).push(list.get(pick).pop());
-            }else{
-                System.out.println("Play invalid!!!");
+                System.out.println("Success!!");
+                //Push the picked cards to the destination stack
+                while(transport_counter > 0)
+                {
+                    list.get(place).push(transport_array[--transport_counter]);
+                }
+            }
+            else
+            {
+                System.out.println("UnSuccess!!");
+
+                /*Put the picked data back to the source stack */
+                while(transport_counter > 0)
+                {
+                    list.get(pick).push(transport_array[--transport_counter]);
+                }
+            }
+
+            
+
+        }
+        else
+        {
+            if(!list.get(pick).empty() && !list.get(place).empty())
+            {
+                //Will only peek over here as if the command is inavlid then the stack should remain untouched.
+                pick_up_card = list.get(pick).peek();
+                place_card = list.get(place).peek();
+
+                if(checkSwitch(pick_up_card, place_card))
+                {
+                    list.get(place).push(list.get(pick).pop());
+                }else{
+                    System.out.println("Play invalid!!!");
+                }
             }
         }
-
+        return true;
     }
 
 }
