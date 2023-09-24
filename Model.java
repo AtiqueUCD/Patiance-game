@@ -53,7 +53,11 @@ public class Model{
      */
     public ArrayList<Stack<String>> list = new ArrayList<Stack<String>>();
 
-    
+    /*
+     * This array is for the transportantion of multiple cards from source arraystack to destination stack
+     */
+    private String[] transport_array = new String[100];
+    private int transport_counter = 0;
 
     public void fill_suits()
     {
@@ -306,25 +310,54 @@ public class Model{
 
     public void processCommand(int command)
     {
-        int pick =  (command / 10);
-        int place = (command % 10);
-        int no_of_picks = (command / 100);
+        int pick =  (command / 100);
+        int place = ((command % 100) / 10);
+        int no_of_picks = (command % 10);
+
+        //Init the transport counter to zero for the new transaction
+        transport_counter = 0;
 
         String pick_up_card = "";
         String place_card = "";
 
         //Check if the respective stacks are empty
-        if(!list.get(pick).empty() && !list.get(place).empty())
+        if(no_of_picks > 1)
         {
-            //Will only peek over here as if the command is inavlid then the stack should remain untouched.
-            pick_up_card = list.get(pick).peek();
-            place_card = list.get(place).peek();
-
-            if(checkSwitch(pick_up_card, place_card))
+            //Get the cards in the transport array
+            while(no_of_picks > 0)
             {
-                list.get(place).push(list.get(pick).pop());
-            }else{
-                System.out.println("Play invalid!!!");
+                transport_array[transport_counter++] = list.get(pick).pop();
+                no_of_picks--;
+            }
+
+            //test
+            System.out.println(transport_array);
+
+            while(transport_counter > 0)
+            {
+                list.get(place).push(transport_array[--transport_counter]);
+            }
+
+            //test
+            System.out.println(list.get(place));
+
+            
+
+        }
+        else
+        {
+            if(!list.get(pick).empty() && !list.get(place).empty())
+            {
+                //Will only peek over here as if the command is inavlid then the stack should remain untouched.
+                pick_up_card = list.get(pick).peek();
+                place_card = list.get(place).peek();
+
+                if(checkSwitch(pick_up_card, place_card))
+                {
+                    list.get(place).push(list.get(pick).pop());
+                }else{
+                    System.out.println("Play invalid!!!");
+                }
             }
         }
 
