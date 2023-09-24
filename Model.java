@@ -12,7 +12,7 @@ public class Model{
         D
     }
 
-    String[] _suits = new String[]{"H", "S", "C", "D"}; 
+    String[] _suits = new String[]{"H", "D", "C", "S"}; 
 
     /*
      * Colors for each suits
@@ -66,7 +66,7 @@ public class Model{
 
         for(int j = 0; j < 4; j++)
         {
-            if(j < 3)
+            if(j < 2)
             {
                 current_color = colors[0];
             }else{
