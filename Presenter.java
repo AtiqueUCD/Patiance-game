@@ -91,10 +91,12 @@ public class Presenter {
     {
         for(int i = 2; i < 9; i++)
             System.out.println(Integer.toString(i - 2) + "->" + suit.list.get(i));
-        System.out.println("8->[" +suit.draw_card + "]");
-
-        System.out.println("D1->" + suit.list.get(0));
-        System.out.println("D2->" + suit.list.get(1));
+        if(!suit.list.get(9).isEmpty())
+            System.out.println("7->[" +suit.list.get(9).peek() + "]");
+        else
+            System.out.println("7->[xxxx]");
+        // System.out.println("D1->" + suit.list.get(0));
+        // System.out.println("D2->" + suit.list.get(1));
         
     }
 }
