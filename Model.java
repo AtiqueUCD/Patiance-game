@@ -235,7 +235,7 @@ public class Model{
             break;
 
             case "0A":
-                Pickup = "0";
+                Pickup = "1";
             break;
         }
 
@@ -255,7 +255,7 @@ public class Model{
             break;
 
             case "0A":
-                Place = "0";
+                Place = "1";
             break;
         }
 
@@ -306,9 +306,12 @@ public class Model{
         return (color_status & hirarchy_status);
     }
 
-    public void processCommand(String command)
+    public boolean processCommand(String command)
     {
         int pick = 0, place = 0, no_of_picks = 0;
+        int temp_cnt = 0;
+        String c1 = "", c2 = "";
+
         int intCommand = Integer.parseInt(command);
         if(command.length() > 2)
         {
@@ -337,9 +340,37 @@ public class Model{
                 no_of_picks--;
             }
 
+            temp_cnt = 0;//transport_counter;
+
             pick_up_card = transport_array[transport_counter - 1];
             place_card = list.get(place).peek();
 
+            /*
+             * perform check
+             */
+            while(transport_counter != (temp_cnt + 1))
+            {
+                if(temp_cnt == 0)
+                {
+                    c1 = transport_array[temp_cnt];
+                    c2 = transport_array[++temp_cnt];
+                }else{
+                    c1 = transport_array[temp_cnt];
+                    c2 = transport_array[++temp_cnt];
+                }
+                if(!checkSwitch(c1, c2))
+                {
+                    /*Abort transport */
+                    System.out.println("Abort transport!!");
+                    /*Put the picked data back to the source stack */
+                    while(transport_counter > 0)
+                    {
+                        list.get(pick).push(transport_array[--transport_counter]);
+                    }
+                    return false;
+                }
+
+            }
             
             if(checkSwitch(pick_up_card, place_card))
             {
@@ -353,12 +384,12 @@ public class Model{
             else
             {
                 System.out.println("UnSuccess!!");
+
                 /*Put the picked data back to the source stack */
                 while(transport_counter > 0)
                 {
                     list.get(pick).push(transport_array[--transport_counter]);
                 }
-
             }
 
             
@@ -380,7 +411,7 @@ public class Model{
                 }
             }
         }
-
+        return true;
     }
 
 }
