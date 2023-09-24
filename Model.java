@@ -329,10 +329,28 @@ public class Model{
                 no_of_picks--;
             }
 
-            //Push the picked cards to the destination stack
-            while(transport_counter > 0)
+            pick_up_card = transport_array[transport_counter - 1];
+            place_card = list.get(place).peek();
+
+            
+            if(checkSwitch(pick_up_card, place_card))
             {
-                list.get(place).push(transport_array[--transport_counter]);
+                System.out.println("Success!!");
+                //Push the picked cards to the destination stack
+                while(transport_counter > 0)
+                {
+                    list.get(place).push(transport_array[--transport_counter]);
+                }
+            }
+            else
+            {
+                System.out.println("UnSuccess!!");
+                /*Put the picked data back to the source stack */
+                while(transport_counter > 0)
+                {
+                    list.get(pick).push(transport_array[--transport_counter]);
+                }
+
             }
 
             
