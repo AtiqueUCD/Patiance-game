@@ -233,6 +233,10 @@ public class Model{
             case "0J":
                 Pickup = "11";
             break;
+
+            case "0A":
+                Pickup = "0";
+            break;
         }
 
 
@@ -248,6 +252,10 @@ public class Model{
 
             case "0J":
                 Place = "11";
+            break;
+
+            case "0A":
+                Place = "0";
             break;
         }
 
