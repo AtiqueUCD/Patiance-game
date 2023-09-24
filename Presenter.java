@@ -63,15 +63,15 @@ public class Presenter {
             card_switch = suit.checkSwitch(suit.list.get(0).peek(), suit.list.get(1).peek());
             System.out.println("Card swicth status : " + card_switch);
             */
-            int command = 0;
+            String command = "";
             clearScreen();
             displayPlayGround(suit);
             Scanner in = new Scanner(System.in);
-            while(command != 99)
+            while(command != "99")
             {
                 System.out.print("Your command: ");
-                command = in.nextInt();
-                if(command == 99)
+                command = in.nextLine();
+                if(command == "99")
                     break;
                 suit.processCommand(command);
                 System.out.println("");

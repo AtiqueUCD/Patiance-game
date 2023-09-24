@@ -2,16 +2,6 @@ import java.util.*;
 
 public class Model{
     
-    /*
-     * Helper Enum for building the Suits; Only for initialization
-     */
-    enum Suits{
-        H,
-        S,
-        C,
-        D
-    }
-
     String[] _suits = new String[]{"H", "D", "C", "S"}; 
 
     /*
@@ -308,11 +298,20 @@ public class Model{
         return (color_status & hirarchy_status);
     }
 
-    public void processCommand(int command)
+    public void processCommand(String command)
     {
-        int pick =  (command / 100);
-        int place = ((command % 100) / 10);
-        int no_of_picks = (command % 10);
+        int pick = 0, place = 0, no_of_picks = 0;
+        int intCommand = Integer.parseInt(command);
+        if(command.length() > 2)
+        {
+            pick =  (intCommand / 100);
+            place = ((intCommand % 100) / 10);
+            no_of_picks = (intCommand % 10);
+        }
+        else{
+            pick =  (intCommand / 10);
+            place = (intCommand % 10);
+        }
 
         //Init the transport counter to zero for the new transaction
         transport_counter = 0;
@@ -330,16 +329,11 @@ public class Model{
                 no_of_picks--;
             }
 
-            //test
-            System.out.println(transport_array);
-
+            //Push the picked cards to the destination stack
             while(transport_counter > 0)
             {
                 list.get(place).push(transport_array[--transport_counter]);
             }
-
-            //test
-            System.out.println(list.get(place));
 
             
 
