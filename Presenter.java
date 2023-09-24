@@ -67,11 +67,11 @@ public class Presenter {
             clearScreen();
             displayPlayGround(suit);
             Scanner in = new Scanner(System.in);
-            while(command != "99")
+            while(command != "z")
             {
                 System.out.print("Your command: ");
                 command = in.nextLine();
-                if(command == "99")
+                if(command == "z")
                     break;
                 suit.processCommand(command);
                 System.out.println("");
@@ -89,7 +89,12 @@ public class Presenter {
 
     public static void displayPlayGround(Model suit)
     {
-        for(int i = 0; i < 7; i++)
-            System.out.println(Integer.toString(i) + "->" + suit.list.get(i));
+        for(int i = 2; i < 9; i++)
+            System.out.println(Integer.toString(i - 2) + "->" + suit.list.get(i));
+        System.out.println("8->[" +suit.draw_card + "]");
+
+        System.out.println("D1->" + suit.list.get(0));
+        System.out.println("D2->" + suit.list.get(1));
+        
     }
 }

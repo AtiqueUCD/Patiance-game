@@ -28,7 +28,8 @@ public class Model{
      */
     public ArrayList<String> common_deck = new ArrayList<>();
 
-    public Stack<String> stack_draw = new Stack<String>();
+    public Stack<String> stack_draw_A = new Stack<String>();
+    public Stack<String> stack_draw_B = new Stack<String>();
     public Stack<String> stack_play_1 = new Stack<String>();
     public Stack<String> stack_play_2 = new Stack<String>();
     public Stack<String> stack_play_3 = new Stack<String>();
@@ -37,7 +38,8 @@ public class Model{
     public Stack<String> stack_play_6 = new Stack<String>();
     public Stack<String> stack_play_7 = new Stack<String>();
     
-
+    private boolean draw_stack_ID = false;
+    public String draw_card = "";
     /*
      * Contains all the stacks
      */
@@ -167,20 +169,22 @@ public class Model{
             else if(i < 28)
                 stack_play_7.push(temp);
             else if(i < 52)
-                stack_draw.push(temp);
+                stack_draw_A.push(temp);
         }
 
         /*
          * Add the stack to the list
          */
-        list.add(0, stack_play_1);
-        list.add(1, stack_play_2);
-        list.add(2, stack_play_3);
-        list.add(3, stack_play_4);
-        list.add(4, stack_play_5);
-        list.add(5, stack_play_6);
-        list.add(6, stack_play_7);
-        list.add(7, stack_draw);
+        list.add(0, stack_draw_A);  //ID 0
+        list.add(1, stack_draw_B);  //ID 1
+        list.add(2, stack_play_1);
+        list.add(3, stack_play_2);
+        list.add(4, stack_play_3);
+        list.add(5, stack_play_4);
+        list.add(6, stack_play_5);
+        list.add(7, stack_play_6);
+        list.add(8, stack_play_7);
+
     }
 
     /*
@@ -311,17 +315,35 @@ public class Model{
         int pick = 0, place = 0, no_of_picks = 0;
         int temp_cnt = 0;
         String c1 = "", c2 = "";
+        int temp_1 = 0, temp_2 = 0;
 
         int intCommand = Integer.parseInt(command);
-        if(command.length() > 2)
+
+        if(command.length() < 2)
         {
-            pick =  (intCommand / 100);
-            place = ((intCommand % 100) / 10);
+            pick = intCommand;
+            //Show the cards from the deck.
+            temp_1 = (this.draw_stack_ID) ? 1 : 0;
+            temp_2 = (!this.draw_stack_ID) ? 1 : 0;
+            if(!list.get(temp_1).isEmpty())
+            {
+                // System.out.println(temp_1);
+                list.get(temp_2).push(list.get(temp_1).pop());
+                draw_card = list.get(temp_2).peek();
+            }else{
+                this.draw_stack_ID = !this.draw_stack_ID;
+            }
+            
+        }
+        else if(command.length() > 2)
+        {
+            pick =  (intCommand / 100) + 2 ;
+            place = ((intCommand % 100) / 10) + 2;
             no_of_picks = (intCommand % 10);
         }
         else{
-            pick =  (intCommand / 10);
-            place = (intCommand % 10);
+            pick =  (intCommand / 10) + 2;
+            place = (intCommand % 10) + 2;
         }
 
         //Init the transport counter to zero for the new transaction
