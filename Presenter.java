@@ -65,7 +65,8 @@ public class Presenter {
             */
             String command = "";
             clearScreen();
-            displayPlayGround(suit);
+            //displayPlayGround(suit);
+            displayPlayDeck(suit);
             Scanner in = new Scanner(System.in);
             while(command != "z")
             {
@@ -75,7 +76,8 @@ public class Presenter {
                     break;
                 suit.processCommand(command);
                 System.out.println("");
-                displayPlayGround(suit);
+                //displayPlayGround(suit);//all ok
+                displayPlayDeck(suit);
             }
                 
         
@@ -98,5 +100,17 @@ public class Presenter {
         // System.out.println("D1->" + suit.list.get(0));
         // System.out.println("D2->" + suit.list.get(1));
         
+    }
+
+    public static void displayPlayDeck(Model suit)
+    {
+        for(int i = 2; i < 9; i++)
+        {
+            System.out.println(suit.list_view.get(i));
+        }
+        if(!suit.list.get(9).isEmpty())
+            System.out.println("7->[" +suit.list.get(9).peek() + "]");
+        else
+            System.out.println("7->[xxxx]");
     }
 }

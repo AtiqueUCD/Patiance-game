@@ -41,14 +41,26 @@ public class Model{
     public Stack<String> stack_play_7 = new Stack<String>();
     public Stack<String> stack_draw = new Stack<String>();
     
-    private boolean draw_stack_ID = false;
-    public String draw_card = "";
-    private int temp_1 = 0, temp_2 = 0;
     /*
      * Contains all the stacks
      */
     public ArrayList<Stack<String>> list = new ArrayList<Stack<String>>();
 
+
+    private boolean draw_stack_ID = false;
+    public String draw_card = "";
+    private int temp_1 = 0, temp_2 = 0;
+
+    
+    public Stack<String> stack_view_play_1 = new Stack<String>();
+    public Stack<String> stack_view_play_2 = new Stack<String>();
+    public Stack<String> stack_view_play_3 = new Stack<String>();
+    public Stack<String> stack_view_play_4 = new Stack<String>();
+    public Stack<String> stack_view_play_5 = new Stack<String>();
+    public Stack<String> stack_view_play_6 = new Stack<String>();
+    public Stack<String> stack_view_play_7 = new Stack<String>();
+
+    public ArrayList<Stack<String>> list_view = new ArrayList<Stack<String>>();
     /*
      * This array is for the transportantion of multiple cards from source arraystack to destination stack
      */
@@ -161,17 +173,35 @@ public class Model{
             if(i == 0)
                 stack_play_1.push(temp);
             else if(i < 3)
+            {
                 stack_play_2.push(temp);
+                stack_view_play_2.push("xxx");
+            }
             else if(i < 6)
+            {
                 stack_play_3.push(temp);
+                stack_view_play_3.push("xxx");
+            }
             else if(i < 10)
+            {
                 stack_play_4.push(temp);
+                stack_view_play_4.push("xxx");
+            }
             else if(i < 15)
+            {
                 stack_play_5.push(temp);
+                stack_view_play_5.push("xxx");
+            }
             else if(i < 21)
+            {
                 stack_play_6.push(temp);
+                stack_view_play_6.push("xxx");
+            }
             else if(i < 28)
+            {
                 stack_play_7.push(temp);
+                stack_view_play_7.push("xxx");
+            }
             else if(i < 52)
                 stack_draw_A.push(temp);
         }
@@ -189,6 +219,30 @@ public class Model{
         list.add(7, stack_play_6);
         list.add(8, stack_play_7);
         list.add(9, stack_draw);
+
+        stack_view_play_2.push("xxx");
+        stack_view_play_3.push("xxx");
+        stack_view_play_4.push("xxx");
+        stack_view_play_5.push("xxx");
+        stack_view_play_6.push("xxx");
+        stack_view_play_7.push("xxx");
+
+
+
+        list_view.add(0, stack_view_play_1);
+        list_view.add(1, stack_view_play_1);
+        list_view.add(2, stack_view_play_1);
+        list_view.add(3, stack_view_play_2);
+        list_view.add(4, stack_view_play_3);
+        list_view.add(5, stack_view_play_4);
+        list_view.add(6, stack_view_play_5);
+        list_view.add(7, stack_view_play_6);
+        list_view.add(8, stack_view_play_7);
+
+        for(int i = 2;i < 9;i++)
+        {
+            updateViewList(i);
+        }
 
     }
 
@@ -480,11 +534,24 @@ public class Model{
             if(checkSwitch(pick_up_card, place_card, bypass))
             {
                 list.get(place).push(list.get(pick).pop());
+                updateViewList(pick);
             }else{
                 System.out.println("Play invalid!!!");
             }
         }
         return true;
+    }
+
+    public void updateViewList(int pickup)
+    {
+
+        if(pickup > 2 && pickup < 9)
+        {
+            list_view.get(pickup).pop();
+            list_view.get(pickup).pop();
+            list_view.get(pickup).push(list.get(pickup).peek());
+        }
+
     }
 
 }
